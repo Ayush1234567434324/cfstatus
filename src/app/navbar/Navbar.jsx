@@ -23,7 +23,14 @@ export default function Navbar() {
   const [isFull, setisFull] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
-   const [username , setusername] = useState(document.cookie);
+  const [username, setusername] = useState('');
+
+  useEffect(() => {
+    // Check if running on the client side before accessing the document
+    if (typeof document !== 'undefined') {
+      setusername(document.cookie);
+    }
+  }, []);
  
   const mobnav = () => {
     const checkbox = document.getElementById("checkbox2");
