@@ -143,7 +143,7 @@ export default function Navbar() {
           />
           <b className="text-red-500" style={{'zIndex':'2'}}>Status</b>
          {(isFull<768  || username==='')?(null):( <div className="flex items-center justify-end w-full gap-4">
-          <img className="w-14 h-14 rounded-full" src={userData.titlePhoto} alt=""/>
+          <img className="w-14 h-14 rounded-full" src={userData.avatar} alt=""/>
         <div className="font-medium dark:text-black">
         <div className="flex justify-end gap-2"> 
         <div>{username}</div>
@@ -192,7 +192,7 @@ export default function Navbar() {
           </nav>
         </div>
       ) : (
-        <div className="absolute right-5 pr-3" style={{'top':'-30px'}} >
+        <div className="fixed right-5 pr-3" style={{'top':'-30px'}} >
           <input type="checkbox" id="checkbox2" className="checkbox2 visuallyHidden " onClick={mobnav} />
           <label htmlFor="checkbox2">
             <div className="hamburger hamburger2">
@@ -219,7 +219,7 @@ export default function Navbar() {
         </Link>
         <li className="flex absolute bottom-24  pr-3 w-full sidnavuserinfo">
         {( username==='')?(null):( <div className="flex items-center justify-center w-full gap-4">
-          <img className=" w-16 h-16 rounded-full" src={userData.titlePhoto} alt="" />
+          <img className=" w-16 h-16 rounded-full" src={userData.avatar} alt="" />
         <div className="font-medium dark:text-black">
         <div className="flex justify-end gap-2"> 
         <div>{username}</div>

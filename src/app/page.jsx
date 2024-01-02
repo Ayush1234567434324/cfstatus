@@ -1,6 +1,19 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Button6 from './button/button';
+import { Chart } from "react-google-charts";
+
+
+
+
+
+export const options = {
+  title: "My Daily Activities",
+  pieHole: 0.10,
+  is3D: false,
+};
+
+
 
 export default function Home() {
   const [username, setUsername] = useState('');
@@ -41,6 +54,106 @@ export default function Home() {
     }
   };
 
+  const [acceptedData, setAcceptedData] = useState([]);
+
+  const url = `https://codeforces.com/api/user.status?handle=${usercookie}`;
+
+  useEffect(() => {
+
+    if(usercookie!=='')
+    {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          // Filter submissions with 'accepted' verdict
+          const acceptedSubmissions = data.result.filter(submission => submission.verdict === 'OK');
+
+          // Update the state with the accepted data
+          setAcceptedData(acceptedSubmissions);
+        } else {
+          console.error(`Failed to fetch data. Status code: ${response.status}`);
+        }
+      } catch (error) {
+        console.error(`Error: ${error.message}`);
+      }
+    };
+  
+    fetchData();}
+  }, [url]);  
+
+
+
+
+
+const problemTags = [  'combine-tags-by-OR',
+'2-sat',
+'binary search',
+'bitmasks',
+'brute force',
+'chinese remainder theorem',
+'combinatorics',
+'constructive algorithms',
+'data structures',
+'dfs and similar',
+'divide and conquer',
+'dp',
+'dsu',
+'expression parsing',
+'fft',
+'flows',
+'games',
+'geometry',
+'graph matchings',
+'graphs',
+'greedy',
+'hashing',
+'implementation',
+'interactive',
+'math',
+'matrices',
+'meet-in-the-middle',
+'number theory',
+'probabilities',
+'schedules',
+'shortest paths',
+'sortings',
+'string suffix structures',
+'strings',
+'ternary search',
+'trees',
+'two pointers',];
+
+const tagToCount = {};
+
+acceptedData.forEach(user => {
+  user.problem.tags.forEach(tag=> {
+    if (problemTags.includes(tag)) {
+      if (tagToCount[tag]) {
+        tagToCount[tag]++;
+      } else {
+        tagToCount[tag] = 1;
+      }
+    }
+  });
+});
+
+
+
+
+const totalCounts = Object.values(tagToCount).reduce((acc, count) => acc + count, 0);
+
+
+const data = [
+  ["Tag", "Count"],
+  ...Object.entries(tagToCount).map(([tag, count]) => [tag, count]),
+];
+
+
+
   return usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
       <div className="w-72">
@@ -62,6 +175,14 @@ export default function Home() {
       </div>
     </div>
   ) : (
-    <></>
+    <>
+  <Chart
+      chartType="PieChart"
+      width="100%"
+      height="400px"
+      data={data}
+      options={options}
+    />
+  </>
   );
 }
