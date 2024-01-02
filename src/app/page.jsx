@@ -1,11 +1,17 @@
-"use client"
-import { useState } from "react";
-import Button6 from "./button/button";
+import { useState, useEffect } from 'react';
+import Button6 from './button/button';
 
 export default function Home() {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
-  const [usercookie , setusercookie] =useState(typeof document !== 'undefined' ? '':document.cookie);
+  const [usercookie, setusercookie] = useState('');
+
+  useEffect(() => {
+    // Check if running on the client side before accessing the document
+    if (typeof document !== 'undefined') {
+      setusercookie(document.cookie);
+    }
+  }, []); // Empty dependency array to run the effect only once on mount
 
   const handleInputChange = (event) => {
     setUsername(event.target.value);
@@ -23,20 +29,18 @@ export default function Home() {
       setUserData(userInformation);
 
       // Store the username in a cookie
-      document.cookie = `${username}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-      setusercookie(document.cookie);
-      window.location.reload();
-       
+      if (typeof document !== 'undefined') {
+        document.cookie = `${username}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+        setusercookie(document.cookie);
+        window.location.reload();
+      }
+
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error('Error fetching user data:', error);
     }
   };
 
-
-
-  return (
-  
-    usercookie===''?(
+  return usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
       <div className="w-72">
         <div className="relative w-full min-w-[200px] h-10 border-black">
@@ -55,8 +59,8 @@ export default function Home() {
       <div onClick={handleUsernameFetch}>
         <Button6 text={'START'} />
       </div>
-    </div>):(<></>)
-    
+    </div>
+  ) : (
+    <></>
   );
- 
 }
