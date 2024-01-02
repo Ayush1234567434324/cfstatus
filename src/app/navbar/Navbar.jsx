@@ -90,13 +90,18 @@ export default function Navbar() {
       setisFull(window.innerWidth);
     };
 
-    window.addEventListener("resize", handleResize);
+    // Check if window is defined before adding event listener
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", handleResize);
+    }
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      // Check if window is defined before removing event listener
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("resize", handleResize);
+      }
     };
   }, []);
-
 
   const logout = () => {
    
