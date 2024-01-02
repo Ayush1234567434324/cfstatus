@@ -1,27 +1,149 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Cuprum&display=swap');
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* Apply the font family to the entire document */
+html, body {
+    font-family: verdana,arial,sans-serif;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+.visuallyHidden {
+    overflow: hidden; 
+    clip: rect(0 0 0 0); 
+    height: 1px; width: 1px; 
+ 
+}
+
+
+
+
+
+.hamburger {
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.hamburger .bar {
+    padding: 0;
+    width: 30px;
+    height: 4px;
+    
+    display: block;
+    border-radius: 4px;
+    transition: all 0.4s ease-in-out;
+    position: absolute; 
+}
+
+.bar1 {
+    top: -3px;
+    background-color: rgb(241, 241, 45);
+    width: 20px !important;
+    height: 10px !important;
+}
+
+.bar2,
+.bar3 {
+    top: 10.5px;
+    background-color: rgb(88, 175, 219);
+    width: 30px !important;
+    height: 10px !important;
+    opacity: 1;
+}
+
+.bar3 {
+    right: 0;
+    background-color: rgb(88, 175, 219);
+   
+    opacity: 0;
+}
+
+.bar4 {
+    bottom: -3px;
+    background-color: rgb(239, 65, 65);
+    width: 20px !important;
+    height: 10px !important;
+}
+
+
+/* HAMBURGER 2 */
+
+.checkbox2:checked + label > .hamburger2 > .bar1{
+    transform: translateX(40px);
+    background-color: transparent;
+}
+
+.checkbox2:checked + label > .hamburger2 > .bar2{
+    transform: rotate(45deg);
+}
+
+.checkbox2:checked + label > .hamburger2 > .bar3{
+    transform: rotate(-45deg);
+    opacity: 1;
+}
+
+.checkbox2:checked + label > .hamburger2 > .bar4{
+    transform: translateX(-40px);
+    background-color: transparent;
+}
+
+@keyframes borderAnimation {
+    0% {
+      border-bottom: 3px solid #3b5998;
+      border-top: 3px solid transparent;
+    }
+    100% {
+      border-bottom: 3px solid #3b5998;
+      border-top: 3px solid #3b5998;
+    }
   }
-}
+  
+  .active {
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid #3b5998;
+    animation: borderAnimation 0.5s forwards;
+    color: rgb(78, 120, 237);
+    font-weight: 600;
+  }
+  
+  
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  .navlist {
+    /* Your existing styles */
+
+    transition: border-bottom 0.3s, border-radius 0.3s, padding 0.3s, transform 0.3s;
+  }
+
+  .navlist.a
+  {
+    font-weight: 400;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #000;
+    outline: none;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    display: block;
+    float: left;
+    height: 20px;
+    overflow: hidden;
+    margin: 0;
+    line-height: 22px;
+  }
+  
+  .navlist:hover {
+    border-bottom: 3px solid #3b5998;
+
+    padding: 0px 3px;
+    transform: translateX(5px); /* Adjust the value as needed */
+  }
+  
+
+  
+  
