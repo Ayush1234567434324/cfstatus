@@ -20,7 +20,7 @@ export default function Navbar() {
 
 
 
-  const [isFull, setisFull] = useState(window.innerWidth);
+  const [isFull, setisFull] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
    const [username , setusername] = useState(document.cookie);
@@ -104,13 +104,12 @@ export default function Navbar() {
   }, []);
 
   const logout = () => {
-   
-    document.cookie = `${username}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-
+    if (typeof window !== 'undefined') {
+      document.cookie = `${username}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+      window.location.reload();
+    }
+  };
   
-    //
-    window.location.reload();
-  }  
 
   
 
