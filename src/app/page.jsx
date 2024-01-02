@@ -5,7 +5,7 @@ import Button6 from "./button/button";
 export default function Home() {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
-  const [usercookie , setusercookie] = useState(document.cookie);
+  const [usercookie , setusercookie] =useState(typeof document !== 'undefined' ? '':document.cookie);
 
   const handleInputChange = (event) => {
     setUsername(event.target.value);
