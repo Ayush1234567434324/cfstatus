@@ -1,17 +1,15 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Button6 from './button/button';
-import { Chart } from "react-google-charts";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 
 
 
-export const options = {
-  title: "My Daily Activities",
-  pieHole: 0.10,
-  is3D: false,
-};
 
 
 
@@ -89,7 +87,8 @@ export default function Home() {
 
 
 
-const problemTags = [  'combine-tags-by-OR',
+const problemTags = [  
+'combine-tags-by-OR',
 '2-sat',
 'binary search',
 'bitmasks',
@@ -129,8 +128,21 @@ const problemTags = [  'combine-tags-by-OR',
 
 const tagToCount = {};
 
+const uniqueProblems = new Set();
+
 acceptedData.forEach(user => {
-  user.problem.tags.forEach(tag=> {
+  const problemKey = `${user.problem.contestId}-${user.problem.index}`;
+
+  // Check for duplicate problem
+  if (uniqueProblems.has(problemKey)) {
+    // Handle duplicate problem (e.g., skip, log, etc.)
+    console.error(`Duplicate problem found: ${problemKey}`);
+    return;
+  }
+
+  uniqueProblems.add(problemKey);
+
+  user.problem.tags.forEach(tag => {
     if (problemTags.includes(tag)) {
       if (tagToCount[tag]) {
         tagToCount[tag]++;
@@ -144,13 +156,93 @@ acceptedData.forEach(user => {
 
 
 
+
+
 const totalCounts = Object.values(tagToCount).reduce((acc, count) => acc + count, 0);
+const tagColors = [
+  '#FFB6C1', // LightPink
+  '#98FB98', // PaleGreen
+  '#87CEFA', // LightSkyBlue
+  '#FFD700', // Gold
+  '#FFC0CB', // Pink
+  '#00CED1', // DarkTurquoise
+  '#F0E68C', // Khaki
+  '#FF6347', // Tomato
+  '#ADFF2F', // GreenYellow
+  '#F08080', // LightCoral
+  '#00FF7F', // SpringGreen
+  '#87CEEB', // SkyBlue
+  '#FFA07A', // LightSalmon
+  '#20B2AA', // LightSeaGreen
+  '#FFDAB9', // PeachPuff
+  '#00FA9A', // MediumSpringGreen
+  '#E6E6FA', // Lavender
+  '#FF4500', // OrangeRed
+  '#7B68EE', // MediumSlateBlue
+  '#FFA500', // Orange
+  '#98FB98', // PaleGreen
+  '#87CEEB', // SkyBlue
+  '#FF69B4', // HotPink
+  '#32CD32', // LimeGreen
+  '#F5DEB3', // Wheat
+  '#FF6347', // Tomato
+  '#F0E68C', // Khaki
+  '#DDA0DD', // Plum
+  '#B0E0E6', // PowderBlue
+  '#00CED1', // DarkTurquoise
+  '#FF7F50', // Coral
+  '#87CEFA', // LightSkyBlue
+  '#FFD700', // Gold
+  '#32CD32', // LimeGreen
+  '#F08080', // LightCoral
+  '#00FF7F', // SpringGreen
+  '#B0C4DE', // LightSteelBlue
+  '#40E0D0', // Turquoise
+  '#9370DB', // MediumPurple
+  '#FF8C00', // DarkOrange
+  '#556B2F'  // DarkOliveGreen
+];
 
 
 const data = [
   ["Tag", "Count"],
   ...Object.entries(tagToCount).map(([tag, count]) => [tag, count]),
 ];
+
+const datacolor = [
+  ["Tag", "Count"],
+  ...Object.entries(tagToCount).map(([tag, count], index) => [tag, count, tagColors[index % tagColors.length]]),
+];
+
+
+const generateGlowingColor = () => {
+  const hue = Math.floor(Math.random() * 360);
+  return `hsla(${hue}, 100%, 50%, 0.7)`;
+};
+
+const dataForChart = {
+  labels: Object.keys(tagToCount),
+  datasets: [
+    {
+      
+      data: Object.values(tagToCount),
+      backgroundColor: 
+        
+           tagColors
+
+      ,
+      borderColor: [
+        'white'
+         
+      ],
+      borderWidth: 1,
+    
+     
+    },
+  ],
+  
+};
+
 
 
 
@@ -175,14 +267,52 @@ const data = [
       </div>
     </div>
   ) : (
-    <>
-  <Chart
-      chartType="PieChart"
-      width="100%"
-      height="400px"
-      data={data}
-      options={options}
+    <div className='flex justify-center my-10'>
+
+<div
+    className="chart-container flex flex-row gap-x-20 justify-center items-center  border border-solid border-gray-300 rounded "
+    style={{ position: 'relative', height: '60vh', width: '70vw',padding:'50px' }}
+  >
+    <Doughnut
+      data={dataForChart}
+      options={{
+        maintainAspectRatio: true,
+        responsive: true,
+        plugins: {
+          legend: {
+            display:false,
+            
+
+          },
+        },
+      }}
+      
     />
-  </>
+ <div className={`tags flex flex-col gap-4`} style={{ height: '50vh', overflowY: 'auto' }}>
+      {datacolor.map(([tag, count, color], index) => (
+        <div key={index} className='flex flex-row gap-2'>
+        {index>0 &&
+        <>
+          <div className='tagbox' style={{
+            width: '30px',
+            height: '30px',
+            borderRadius: '8px', 
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            backgroundColor: color,
+          }}></div>
+          <div className='tagename mt-2' style={{ fontSize: '14px', fontWeight: 'bold'  }}>
+            {tag} - {count}
+          </div>
+          </>}
+        </div>
+      ))}
+    </div>
+
+    
+  </div>
+    
+    </div>
+  
+    
   );
 }
