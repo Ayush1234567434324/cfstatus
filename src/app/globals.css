@@ -186,7 +186,7 @@ html, body {
 
     .tagename
     {
-      font-size: 8px !important ;
+      font-size: 12px !important ;
     }
     .tagkami
     {
@@ -202,4 +202,16 @@ html, body {
       flex-direction: column !important;
       align-items: center;
     }
+    .tagename
+    {
+      font-size: 10px !important ;
+    }
+    .tags
+    {
+       width:50vw !important ;
+       height: 40vh !important;
+      
+
+    }
+    
   }

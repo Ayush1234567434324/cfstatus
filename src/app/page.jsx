@@ -214,7 +214,13 @@ const datacolor = [
   ...Object.entries(tagToCount).map(([tag, count], index) => [tag, count, tagColors[index % tagColors.length]]),
 ];
 
+datacolor.sort((a, b) => b[1] - a[1]);
 
+// If you want to keep the header at the beginning, you can separate it
+const [header, ...sortedData] = datacolor;
+
+// Updated sortedData array
+const sortedDatacolor = [header, ...sortedData];
 const generateGlowingColor = () => {
   const hue = Math.floor(Math.random() * 360);
   return `hsla(${hue}, 100%, 50%, 0.7)`;
@@ -232,7 +238,7 @@ const dataForChart = {
 
       ,
       borderColor: [
-        'white'
+        'gray'
          
       ],
       borderWidth: 1,
@@ -267,6 +273,8 @@ const dataForChart = {
       </div>
     </div>
   ) : (
+    <div className='flex flex-col pt-16'>
+     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
     <div className='tagdad flex justify-center my-10 gap-10'>
 
 <div
@@ -293,8 +301,8 @@ const dataForChart = {
     
   </div>
   <div className={`tags flex flex-col gap-4  justify-center items-center border border-solid border-gray-300 rounded `} style={{ height: '60vh',width:'40vw', overflowY: 'auto' }}>
-    <div className='p-10 flex flex-col gap-3'>
-      {datacolor.map(([tag, count, color], index) => (
+    <div className=' mb-2 flex flex-col gap-3' style={{'height':'55vh'}}>
+      {sortedDatacolor.map(([tag, count, color], index) => (
         <div key={index} className='flex flex-row justify-start pl-10  gap-2 w-full'>
         {index>0 &&
         <div className='tagkami flex gap-4'>
@@ -302,8 +310,9 @@ const dataForChart = {
             width: '30px',
             height: '30px',
             borderRadius: '8px', 
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             backgroundColor: color,
+            borderColor:'black',
+            borderWidth:'1px'
           }}></div>
           <div className='tagename mt-2' style={{ fontSize: '14px', fontWeight: 'bold'  }}>
             {tag} - {count}
@@ -314,7 +323,7 @@ const dataForChart = {
     </div>
     </div>
     </div>
-  
+    </div>
     
   );
 }
