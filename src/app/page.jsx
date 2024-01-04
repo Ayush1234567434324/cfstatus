@@ -267,11 +267,11 @@ const dataForChart = {
       </div>
     </div>
   ) : (
-    <div className='flex justify-center my-10'>
+    <div className='tagdad flex justify-center my-10 gap-10'>
 
 <div
     className="chart-container flex flex-row gap-x-20 justify-center items-center  border border-solid border-gray-300 rounded "
-    style={{ position: 'relative', height: '60vh', width: '70vw',padding:'50px' }}
+    style={{ position: 'relative', height: '60vh', width: '50vw',padding:'20px' }}
   >
     <Doughnut
       data={dataForChart}
@@ -288,11 +288,16 @@ const dataForChart = {
       }}
       
     />
- <div className={`tags flex flex-col gap-4`} style={{ height: '50vh', overflowY: 'auto' }}>
+
+
+    
+  </div>
+  <div className={`tags flex flex-col gap-4  justify-center items-center border border-solid border-gray-300 rounded `} style={{ height: '60vh',width:'40vw', overflowY: 'auto' }}>
+    <div className='p-10 flex flex-col gap-3'>
       {datacolor.map(([tag, count, color], index) => (
-        <div key={index} className='flex flex-row gap-2'>
+        <div key={index} className='flex flex-row justify-start pl-10  gap-2 w-full'>
         {index>0 &&
-        <>
+        <div className='tagkami flex gap-4'>
           <div className='tagbox' style={{
             width: '30px',
             height: '30px',
@@ -303,14 +308,11 @@ const dataForChart = {
           <div className='tagename mt-2' style={{ fontSize: '14px', fontWeight: 'bold'  }}>
             {tag} - {count}
           </div>
-          </>}
+          </div>}
         </div>
       ))}
     </div>
-
-    
-  </div>
-    
+    </div>
     </div>
   
     

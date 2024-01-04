@@ -143,7 +143,63 @@ html, body {
     padding: 0px 3px;
     transform: translateX(5px); /* Adjust the value as needed */
   }
-  
+
+  @media (max-width: 920px) 
+  {
+    .tagkami
+    {
+      display: flex !important;
+      flex-direction: column !important ;
+      gap: 1px !important;
+    }
+    .tags
+    {
+      gap:1px !important;
+
+     
+    }
+  }
+
+
+
+
 
   
+  @media (max-width: 800px) {
+    .tags
+    {
+      gap:0px !important;
+
+     
+    }
+    .chart-container
+    {
+      gap:10% !important;
+    }
+    .tagbox
+    {
+      width: 15px !important;
+      height: 15px !important;
+      border-radius: 2px !important;
+      gap: 1px !important;
+    }
+
+    .tagename
+    {
+      font-size: 8px !important ;
+    }
+    .tagkami
+    {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+  }
   
+  @media (max-width: 600px)
+  {
+    .tagdad
+    {
+      flex-direction: column !important;
+      align-items: center;
+    }
+  }
