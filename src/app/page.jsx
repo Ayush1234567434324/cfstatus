@@ -1,8 +1,8 @@
 "use client"
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import Button6 from './button/button';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut,getDatasetAtEvent } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,6 +14,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export default function Home() {
+
+  const chartRef = useRef(null);
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [usercookie, setusercookie] = useState('');
@@ -66,7 +68,7 @@ export default function Home() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+        
           // Filter submissions with 'accepted' verdict
           const acceptedSubmissions = data.result.filter(submission => submission.verdict === 'OK');
 
@@ -136,7 +138,7 @@ acceptedData.forEach(user => {
   // Check for duplicate problem
   if (uniqueProblems.has(problemKey)) {
     // Handle duplicate problem (e.g., skip, log, etc.)
-    console.error(`Duplicate problem found: ${problemKey}`);
+    
     return;
   }
 
@@ -203,7 +205,6 @@ const tagColors = [
   '#556B2F'  // DarkOliveGreen
 ];
 
-
 const data = [
   ["Tag", "Count"],
   ...Object.entries(tagToCount).map(([tag, count]) => [tag, count]),
@@ -221,10 +222,7 @@ const [header, ...sortedData] = datacolor;
 
 // Updated sortedData array
 const sortedDatacolor = [header, ...sortedData];
-const generateGlowingColor = () => {
-  const hue = Math.floor(Math.random() * 360);
-  return `hsla(${hue}, 100%, 50%, 0.7)`;
-};
+
 
 const dataForChart = {
   labels: Object.keys(tagToCount),
@@ -249,6 +247,25 @@ const dataForChart = {
   
 };
 
+const graph = (index) => {
+  const clickedTag = sortedData[index - 1][0];
+  const dataPosition = data.findIndex((item) => item[0] === clickedTag);
+  const chart = chartRef.current;
+
+  if (chart) {
+    // Reset all active elements to deactivate tooltips
+    chart.setActiveElements([]);
+     
+    // Check if the data position is valid
+    if (dataPosition !== -1) {
+      // Activate tooltip for the specific segment
+      chart.setActiveElements([{ datasetIndex: 0, index: dataPosition }]);
+       console.log(chart)  
+      // Update the ch art to reflect the changes
+      chart.update();
+    }
+  }
+};
 
 
 
@@ -294,14 +311,15 @@ const dataForChart = {
           },
         },
       }}
-      
+     ref={chartRef}  
+    
     />
 
 
     
   </div>
-  <div className={`tags flex flex-col gap-4  justify-center items-center border border-solid border-gray-300 rounded `} style={{ height: '60vh',width:'40vw', overflowY: 'auto' }}>
-    <div className=' mb-2 flex flex-col gap-3' style={{'height':'55vh'}}>
+  <div className={`tags flex flex-col  justify-center items-center border border-solid border-gray-300 rounded `} style={{ height: '60vh',width:'40vw', overflowY: 'auto' }}>
+    <div className=' mb-20 flex flex-col gap-3' style={{'height':'75%'}}>
       {sortedDatacolor.map(([tag, count, color], index) => (
         <div key={index} className='flex flex-row justify-start pl-10  gap-2 w-full'>
         {index>0 &&
@@ -313,9 +331,9 @@ const dataForChart = {
             backgroundColor: color,
             borderColor:'black',
             borderWidth:'1px'
-          }}></div>
+          }}  onClick={() => graph(index)}></div>
           <div className='tagename mt-2' style={{ fontSize: '14px', fontWeight: 'bold'  }}>
-            {tag} - {count}
+            {tag} : {count}
           </div>
           </div>}
         </div>

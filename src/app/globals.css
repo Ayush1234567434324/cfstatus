@@ -144,6 +144,12 @@ html, body {
     transform: translateX(5px); /* Adjust the value as needed */
   }
 
+
+.tagbox:hover{
+
+  filter: brightness(0.8);
+}
+
   @media (max-width: 920px) 
   {
     .tagkami
@@ -175,6 +181,7 @@ html, body {
     .chart-container
     {
       gap:10% !important;
+    
     }
     .tagbox
     {
@@ -197,6 +204,13 @@ html, body {
   
   @media (max-width: 600px)
   {
+
+     .chart-container
+     {
+      height: 40vh !important;
+      width: 80vw !important;
+
+     }
     .tagdad
     {
       flex-direction: column !important;
@@ -208,7 +222,7 @@ html, body {
     }
     .tags
     {
-       width:50vw !important ;
+       width:80vw !important ;
        height: 40vh !important;
       
 
