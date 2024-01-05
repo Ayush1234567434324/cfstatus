@@ -252,19 +252,6 @@ const graph = (index) => {
   const dataPosition = data.findIndex((item) => item[0] === clickedTag);
   const chart = chartRef.current;
 
-  if (chart) {
-    // Reset all active elements to deactivate tooltips
-    chart.setActiveElements([]);
-     
-    // Check if the data position is valid
-    if (dataPosition !== -1) {
-      // Activate tooltip for the specific segment
-      chart.setActiveElements([{ datasetIndex: 0, index: dataPosition }]);
-       console.log(chart)  
-      // Update the ch art to reflect the changes
-      chart.update();
-    }
-  }
 };
 
 

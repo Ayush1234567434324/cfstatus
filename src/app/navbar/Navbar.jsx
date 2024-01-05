@@ -8,18 +8,6 @@ import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
 
-
-
-
-
-
-
-
-
-
-
-
-
   const [isFull, setisFull] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
@@ -132,7 +120,7 @@ export default function Navbar() {
     <>
       <div className={`ml-${isFull < 400 ?8:10} sm-ml-2 my-4 pr-5`}>
 
-        <div className="flex" >
+        <div className="flex pl-2" >
           <Image
             priority
             src={codeforcesicon}
