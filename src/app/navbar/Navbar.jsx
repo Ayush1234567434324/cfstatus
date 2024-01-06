@@ -6,9 +6,10 @@ import { useState, useEffect } from "react";
 import { usePathname } from 'next/navigation';
 
 
+
 export default function Navbar() {
 
-  const [isFull, setisFull] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  const [isFull, setisFull] = useState(typeof window !== 'undefined' ? window.innerWidth : '!');
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const pathname = usePathname();
   const [username, setusername] = useState('');
@@ -117,6 +118,15 @@ export default function Navbar() {
 
 
   return (
+    isFull==='!'?<div className="flex justify-center pt-5" >
+    <Image
+      priority
+      src={codeforcesicon}
+      alt="Codeforces Logo"
+      height={isFull < 768 ? isFull<400?650: 800 : 1000}
+      width={isFull < 768 ?isFull<400?150: 200 : 300}
+      style={{'zIndex':'2'}}
+    /></div> :
     <>
       <div className={`ml-${isFull < 400 ?8:10} sm-ml-2 my-4 pr-5`}>
 

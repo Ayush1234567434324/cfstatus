@@ -314,7 +314,7 @@ const offsetclick=(e)=>
     </div>
   ) : (
     <div className='flex flex-col pt-16'>
-     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
+     <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
     <div className='tagdad flex justify-center my-10 gap-10'>
 
 <div
