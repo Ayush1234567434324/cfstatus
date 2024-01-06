@@ -2,8 +2,7 @@
 import { useState, useEffect,useRef } from 'react';
 import Button6 from './button/button';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut,getDatasetAtEvent } from 'react-chartjs-2';
-
+import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -160,7 +159,7 @@ acceptedData.forEach(user => {
 
 
 
-const totalCounts = Object.values(tagToCount).reduce((acc, count) => acc + count, 0);
+
 const tagColors = [
   '#FFB6C1', // LightPink
   '#98FB98', // PaleGreen
@@ -222,6 +221,8 @@ const [header, ...sortedData] = datacolor;
 
 // Updated sortedData array
 const sortedDatacolor = [header, ...sortedData];
+const offset = new Array(sortedDatacolor.length-1).fill(0);
+
 
 
 const dataForChart = {
@@ -240,21 +241,56 @@ const dataForChart = {
          
       ],
       borderWidth: 1,
-    
+      offset:offset
      
     },
   ],
   
 };
 
+
 const graph = (index) => {
+
+  
   const clickedTag = sortedData[index - 1][0];
   const dataPosition = data.findIndex((item) => item[0] === clickedTag);
   const chart = chartRef.current;
 
+  chart.tooltip.setActiveElements([{datasetIndex: 0, index: dataPosition-1}]);
+  chart.setActiveElements([{datasetIndex: 0, index: dataPosition-1}]);
+  offset[dataPosition-1]=20;
+ 
+  chart.update();
+
+  offset[dataPosition-1]=0;
+   
 };
 
 
+const offsetclick=(e)=>
+{
+
+  const chart = chartRef.current;
+  
+  const points = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+
+    if (points.length) {
+        const firstPoint = points[0];
+
+  
+          chart.data.datasets[firstPoint.datasetIndex].offset[firstPoint.index]=20;
+         
+         chart.update();
+         chart.data.datasets[firstPoint.datasetIndex].offset[firstPoint.index]=0;
+    }
+   
+   /*chart.config.data.datasets[x[x.length-1].index].offset[x[0].index]=40;
+   chart.update();*/
+  
+
+ 
+ 
+}
 
   return usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
@@ -285,22 +321,21 @@ const graph = (index) => {
     className="chart-container flex flex-row gap-x-20 justify-center items-center  border border-solid border-gray-300 rounded "
     style={{ position: 'relative', height: '60vh', width: '50vw',padding:'20px' }}
   >
-    <Doughnut
-      data={dataForChart}
-      options={{
-        maintainAspectRatio: true,
-        responsive: true,
-        plugins: {
-          legend: {
-            display:false,
-            
+  <Doughnut
+  data={dataForChart}
+  options={{
+    maintainAspectRatio: true,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    onClick: (e) => offsetclick(e),
+  }}
+  ref={chartRef}
+/>
 
-          },
-        },
-      }}
-     ref={chartRef}  
-    
-    />
 
 
     
