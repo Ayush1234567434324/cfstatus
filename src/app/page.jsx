@@ -55,12 +55,12 @@ export default function Home() {
   };
 
   const [acceptedData, setAcceptedData] = useState([]);
-
+  const [profile,setprofile]=useState([]);
   const url = `https://codeforces.com/api/user.status?handle=${usercookie}`;
 
   useEffect(() => {
 
-    if(usercookie!=='')
+    if(usercookie!=='!')
     {
     const fetchData = async () => {
       try {
@@ -80,9 +80,32 @@ export default function Home() {
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }
+     
+
+
+
+
     };
-  
-    fetchData();}
+        const handleUserdataFetch = async () => {
+        try {
+          const response = await fetch(`https://codeforces.com/api/user.info?handles=${usercookie}`);
+          const data = await response.json();
+    
+          // Assuming the API response structure includes a 'result' key with user information
+          const userInformation = data.result[0];
+    
+          // Set the fetched user data in state
+          setprofile(userInformation);
+    
+          // Store the username in a cookie
+         
+    
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+    fetchData();
+  handleUserdataFetch();}
   }, [url]);  
 
 
@@ -151,7 +174,6 @@ acceptedData.forEach(user => {
   uniqueProblems.add(problemKey);
 
  
-console.log(user.problem.rating)
 
 
  if( ratingToCount[user.problem.rating] && user.problem.rating!==undefined)  
@@ -332,7 +354,8 @@ const offsetclick=(e)=>
 }
 
 
-console.log(ratingToCount)
+
+
   return usercookie==='!'?<Loading></Loading>:usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
       <div className="w-72">
@@ -356,10 +379,27 @@ console.log(ratingToCount)
   ) : (
 
       <div>
+                <div>
+          { sortedDatacolor.length===1?<Loading></Loading>:
+           <div className='flex flex-col pt-16 justify-center items-center'>
+    <div className='flex justify-center my-10 '></div>
+            <div className="chart-container flex flex-col  items-end  border border-solid border-gray-300 rounded "
+    style={{ height: '100vh', width: '93vw'}}>
+
+<div className='mr-3 mt-3 border border-solid border-gray-300 rounded p-3'>
+  <img className="rounded" src={profile.titlePhoto} alt="Extra large avatar" style={{ maxWidth: '100%', height: 'auto' }} />
+</div>
+      
+
+
+            </div>
+            </div>
+}
+            </div>
         <div>
           { sortedDatacolor.length===1?<Loading></Loading>:
            <div className='flex flex-col pt-16 justify-center items-center'>
-     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Solved Problem <span class="text-blue-600 dark:text-blue-500">Rating</span></h1>
+     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Solved Problem <span className="text-blue-600 dark:text-blue-500">Rating</span></h1>
     <div className='flex justify-center my-10 '></div>
             <div className="chart-container flex flex-row  justify-center items-center  border border-solid border-gray-300 rounded "
     style={{ position: 'relative', height: '75vh', width: '93vw'}}>
@@ -382,7 +422,7 @@ console.log(ratingToCount)
       { 
       sortedDatacolor.length===1?<Loading></Loading>:    
     <div className='flex flex-col pt-16'>
-     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
+     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span className="text-blue-600 dark:text-blue-500">Solved</span></h1>
     <div className='tagdad flex justify-center my-10 gap-10'>
 
 <div

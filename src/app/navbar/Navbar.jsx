@@ -177,7 +177,7 @@ export default function Navbar() {
           <nav className="ml-10 my-4 border border-solid border-gray-300 rounded p-2" style={{ width: "100%" }}>
             <ul className="flex space-x-4 ">
             <li className={`navlist ${pathname === '/' ? 'active' : ''}`}>
-              <Link href="/">HOME</Link>
+              <Link href="/" >HOME</Link>
               </li>
               <li className={`navlist ${pathname === '/about' ? 'active' : ''}`}>
                 <Link href="/about">ABOUT</Link>
