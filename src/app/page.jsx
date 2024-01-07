@@ -1,10 +1,10 @@
 "use client"
 import { useState, useEffect,useRef } from 'react';
 import Button6 from './button/button';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale,LinearScale, BarElement } from 'chart.js';
+import { Doughnut , Bar } from 'react-chartjs-2';
 import Loading from './loading/loading';
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend,CategoryScale,LinearScale,BarElement);
 
 
 
@@ -122,15 +122,21 @@ const problemTags = [
 'schedules',
 'shortest paths',
 'sortings',
-'string suffix structures',
+'string suffix structures' ,
 'strings',
 'ternary search',
 'trees',
 'two pointers',];
 
-const tagToCount = {};
 
+
+const tagToCount = {};
+const ratingToCount={};
 const uniqueProblems = new Set();
+
+
+
+
 
 acceptedData.forEach(user => {
   const problemKey = `${user.problem.contestId}-${user.problem.index}`;
@@ -143,6 +149,16 @@ acceptedData.forEach(user => {
   }
 
   uniqueProblems.add(problemKey);
+
+ 
+console.log(user.problem.rating)
+
+
+ if( ratingToCount[user.problem.rating] && user.problem.rating!==undefined)  
+ ratingToCount[user.problem.rating]++;
+ else if(user.problem.rating!==undefined)
+ ratingToCount[user.problem.rating]=1;
+
 
   user.problem.tags.forEach(tag => {
     if (problemTags.includes(tag)) {
@@ -249,6 +265,28 @@ const dataForChart = {
   
 };
 
+const dataForbarChart = {
+  labels: Object.keys(ratingToCount),
+  datasets: [
+    {
+      
+      data: Object.values(ratingToCount),
+      backgroundColor: 
+        
+           tagColors
+
+      ,
+      borderColor: [
+        'gray'
+         
+      ],
+      borderWidth: 1,
+      
+     
+    },
+  ],
+  
+};
 
 const graph = (index) => {
 
@@ -293,6 +331,8 @@ const offsetclick=(e)=>
  
 }
 
+
+console.log(ratingToCount)
   return usercookie==='!'?<Loading></Loading>:usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
       <div className="w-72">
@@ -315,10 +355,30 @@ const offsetclick=(e)=>
     </div>
   ) : (
 
-    
+      <div>
+           <div className='flex flex-col pt-16 justify-center items-center'>
+     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
+    <div className='flex justify-center my-10 '></div>
+            <div className="chart-container flex flex-row  justify-center items-center  border border-solid border-gray-300 rounded "
+    style={{ position: 'relative', height: '75vh', width: '93vw'}}>
+            <Bar  options={{
+    maintainAspectRatio: true,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+   
+  }}  data={dataForbarChart}   />
+            </div>
+            </div>
+      <div>
+
+      { 
       sortedDatacolor.length===1?<Loading></Loading>:    
     <div className='flex flex-col pt-16'>
-     <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
+     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
     <div className='tagdad flex justify-center my-10 gap-10'>
 
 <div
@@ -368,7 +428,8 @@ const offsetclick=(e)=>
     </div>
     </div>
     </div>
+    </div>}
     </div>
-        
+      </div>    
   );
 }
