@@ -356,8 +356,10 @@ console.log(ratingToCount)
   ) : (
 
       <div>
+        <div>
+          { sortedDatacolor.length===1?<Loading></Loading>:
            <div className='flex flex-col pt-16 justify-center items-center'>
-     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
+     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Solved Problem <span class="text-blue-600 dark:text-blue-500">Rating</span></h1>
     <div className='flex justify-center my-10 '></div>
             <div className="chart-container flex flex-row  justify-center items-center  border border-solid border-gray-300 rounded "
     style={{ position: 'relative', height: '75vh', width: '93vw'}}>
@@ -372,6 +374,8 @@ console.log(ratingToCount)
    
   }}  data={dataForbarChart}   />
             </div>
+            </div>
+}
             </div>
       <div>
 
