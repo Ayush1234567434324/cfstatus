@@ -3,6 +3,7 @@ import { useState, useEffect,useRef } from 'react';
 import Button6 from './button/button';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import Loading from './loading/loading';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -17,7 +18,7 @@ export default function Home() {
   const chartRef = useRef(null);
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
-  const [usercookie, setusercookie] = useState('');
+  const [usercookie, setusercookie] = useState('!');
 
   useEffect(() => {
     // Check if running on the client side before accessing the document
@@ -292,7 +293,7 @@ const offsetclick=(e)=>
  
 }
 
-  return usercookie === '' ? (
+  return usercookie==='!'?<Loading></Loading>:usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
       <div className="w-72">
         <div className="relative w-full min-w-[200px] h-10 border-black">
@@ -313,6 +314,9 @@ const offsetclick=(e)=>
       </div>
     </div>
   ) : (
+
+    
+      sortedDatacolor.length===1?<Loading></Loading>:    
     <div className='flex flex-col pt-16'>
      <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-5xl dark:text-black" style={{'textAlign':'center'}}>Tag <span class="text-blue-600 dark:text-blue-500">Solved</span></h1>
     <div className='tagdad flex justify-center my-10 gap-10'>
@@ -321,6 +325,7 @@ const offsetclick=(e)=>
     className="chart-container flex flex-row gap-x-20 justify-center items-center  border border-solid border-gray-300 rounded "
     style={{ position: 'relative', height: '60vh', width: '50vw',padding:'20px' }}
   >
+ 
   <Doughnut
   data={dataForChart}
   options={{
@@ -364,6 +369,6 @@ const offsetclick=(e)=>
     </div>
     </div>
     </div>
-    
+        
   );
 }
