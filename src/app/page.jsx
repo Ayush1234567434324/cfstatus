@@ -4,6 +4,8 @@ import Button6 from './button/button';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale,LinearScale, BarElement } from 'chart.js';
 import { Doughnut , Bar } from 'react-chartjs-2';
 import Loading from './loading/loading';
+import Image from 'next/image';
+
 ChartJS.register(ArcElement, Tooltip, Legend,CategoryScale,LinearScale,BarElement);
 
 
@@ -352,9 +354,55 @@ const offsetclick=(e)=>
  
  
 }
+console.log(profile)
+
+const ratingColor = (val) => {
+  if (val >= 0 && val <= 1200) {
+  
+    return `gray`;
+  }
+
+  if (val > 1200 && val <= 1400) {
+   
+    return `green`;
+  }
+  if (val > 1400 && val <= 1600) {
+  
+    return `#03a89e`;
+  }
+  if (val > 1600 && val <= 1900) {
+   
+    return `blue`;
+  }
+  if (val > 1900 && val <= 2100) {
+
+    return `#a0a`;
+  }
+  if (val > 2100 && val <= 2300) {
+   
+    return `#ff8c00`;
+  }
+  if (val > 2300 && val <= 2400) {
+   
+    return `#ff8c00`;
+  }
+  if (val > 2400 && val <= 2600) {
+   
+    return `red`;
+  }
+  if (val > 2600 && val <= 3000) {
+   
+    return `red`;
+  }
+  if (val > 3000) {
+   
+    return `red`;
+  }
 
 
 
+  
+};
 
   return usercookie==='!'?<Loading></Loading>:usercookie === '' ? (
     <div className="w-full flex flex-col items-center gap-2 justify-center my-20">
@@ -378,18 +426,37 @@ const offsetclick=(e)=>
     </div>
   ) : (
 
-      <div>
+      <div className='flex flex-col gap-40'>
                 <div>
-          { sortedDatacolor.length===1?<Loading></Loading>:
-           <div className='flex flex-col pt-16 justify-center items-center'>
+          {profile.length===0?<Loading></Loading>:
+           <div className='flex flex-col  justify-center items-center'>
     <div className='flex justify-center my-10 '></div>
-            <div className="chart-container flex flex-col  items-end  border border-solid border-gray-300 rounded "
+            <div className="chart-container flex flex-row border border-solid border-gray-300 rounded "
     style={{ height: '100vh', width: '93vw'}}>
-
-<div className='mr-3 mt-3 border border-solid border-gray-300 rounded p-3'>
-  <img className="rounded" src={profile.titlePhoto} alt="Extra large avatar" style={{ maxWidth: '100%', height: 'auto' }} />
+<div className='flex' style={{width:'100%'}}>
+<div style={{width:'100%'}}>
+  <div className='pl-5 pt-3' >
+    <div className='flex flex-col gap-2'><div><h2 className=' text-sm sm:text-2xl md:text-3xl lg:text-4xl' style={{color:ratingColor(profile.rating),fontWeight:'bolder' }}>{profile.rank}</h2></div>
+    <div><h2 className={`${profile.rating>3000?'ratingcol':null} text-sm sm:text-sm md:text-xl lg:text-2xl`} style={{color:ratingColor(profile.rating),fontWeight:'bold'}}>{profile.handle}</h2></div>
+    <div className='flex gap-2 pt-3 contest-div'><Image src='./contest.svg' width={25} height={25}/>
+      <h2 className='contest-rating' style={{fontSize:'1.3rem'}}>Contest rating :</h2><h2 className= 'contest-rating' style={{fontWeight:'bold',color:ratingColor(profile.rating),fontSize:'1.3rem'}}>{profile.rating}</h2>
+    <h2 className='contestp-div text-sm flex gap-2'>(max <p className='contestp' style={{color:ratingColor(profile.maxRating),fontWeight:'bold'}}>{profile.maxRank}</p><p className='contestp' style={{color:ratingColor(profile.maxRating),fontWeight:'bold'}}>{profile.maxRating}</p> )
+    </h2></div>
+    </div>
+  </div>
 </div>
-      
+
+<div style={{width:'100%'}} ><div className='mr-3 mt-3  flex justify-end'>
+  <div className='border border-solid border-gray-300 rounded p-3'>
+  <img className="rounded temp"  src={profile.titlePhoto} alt="Extra large avatar" style={{ width:'272px', height:'300px' }} />
+  </div>
+ 
+</div></div>  
+
+
+
+</div>
+    
 
 
             </div>

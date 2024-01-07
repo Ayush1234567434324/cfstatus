@@ -144,7 +144,7 @@ export default function Navbar() {
           <img className="w-14 h-14 rounded-full" src={userData.avatar} alt=""/>
         <div className="font-medium dark:text-black">
         <div className="flex justify-end gap-2"> 
-        <div>{username}</div>
+        <div>{userData.handle}</div>
         <svg
   width="24"
   height="24"
@@ -220,7 +220,7 @@ export default function Navbar() {
           <img className=" w-16 h-16 rounded-full" src={userData.avatar} alt="" />
         <div className="font-medium dark:text-black">
         <div className="flex justify-end gap-2"> 
-        <div>{username}</div>
+        <div>{userData.handle}</div>
         <svg
   width="24"
   height="24"

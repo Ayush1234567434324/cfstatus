@@ -187,6 +187,11 @@ html, body {
   animation: animate 1.5s linear infinite;
 }
 
+.ratingcol::first-letter
+{
+  color: #000 !important;
+}
+
 @keyframes animate {
   0% {
     transform: translateX(0);
@@ -286,6 +291,22 @@ html, body {
       display: flex !important;
       flex-direction: column !important;
     }
+    .contest-rating
+    {
+       font-size: 0.8rem !important;
+    }
+    .contestp
+    {
+      font-size: 0.5rem !important;
+    }
+    .contest-div
+    {
+      gap:5px !important;
+    }
+    .contestp-div
+    {
+      gap:3px !important;
+    }
   }
   
   @media (max-width: 600px)
@@ -312,6 +333,10 @@ html, body {
        height: 40vh !important;
       
 
+    }
+    .temp
+    {
+      display:none;
     }
     
   }
