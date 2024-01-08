@@ -255,6 +255,21 @@ html, body {
 
      
     }
+    
+    .contest-rating
+    {
+       font-size: 1rem !important;
+    }
+    .contestp
+    {
+      font-size: 0.8rem !important;
+    }
+
+
+    .temp{
+      width: 170px !important;
+      height: 200px !important;
+    }
   }
 
 
@@ -307,6 +322,10 @@ html, body {
     {
       gap:3px !important;
     }
+    .temp{
+      width: 120px !important;
+      height: 150px !important;
+    }
   }
   
   @media (max-width: 600px)
@@ -314,8 +333,8 @@ html, body {
 
      .chart-container
      {
-      height: 40vh !important;
-      width: 80vw !important;
+      height: 100% !important;
+      width: 85% !important;
 
      }
     .tagdad
@@ -334,9 +353,21 @@ html, body {
       
 
     }
-    .temp
-    {
-      display:none;
+    .temp{
+      width: 80px !important;
+      height: 100px !important;
+   
+
     }
-    
+    .chart-flex
+    {
+       flex-direction: column-reverse !important;
+       justify-content: flex-end !important;
+    }
+    .responsivediv
+    {
+      justify-content: center !important;
+    }
+
+
   }

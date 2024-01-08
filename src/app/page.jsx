@@ -433,12 +433,12 @@ const ratingColor = (val) => {
     <div className='flex justify-center my-10 '></div>
             <div className="chart-container flex flex-row border border-solid border-gray-300 rounded "
     style={{ height: '100vh', width: '93vw'}}>
-<div className='flex' style={{width:'100%'}}>
+<div className='flex chart-flex ' style={{width:'100%'}}>
 <div style={{width:'100%'}}>
   <div className='pl-5 pt-3' >
     <div className='flex flex-col gap-2'><div><h2 className=' text-sm sm:text-2xl md:text-3xl lg:text-4xl' style={{color:ratingColor(profile.rating),fontWeight:'bolder' }}>{profile.rank}</h2></div>
     <div><h2 className={`${profile.rating>3000?'ratingcol':null} text-sm sm:text-sm md:text-xl lg:text-2xl`} style={{color:ratingColor(profile.rating),fontWeight:'bold'}}>{profile.handle}</h2></div>
-    <div className='flex gap-2 pt-3 contest-div'><Image src='./contest.svg' width={25} height={25}/>
+    <div className='flex gap-2 pt-3 contest-div'><Image className='contestimg' src='./contest.svg' width={25} height={25}/>
       <h2 className='contest-rating' style={{fontSize:'1.3rem'}}>Contest rating :</h2><h2 className= 'contest-rating' style={{fontWeight:'bold',color:ratingColor(profile.rating),fontSize:'1.3rem'}}>{profile.rating}</h2>
     <h2 className='contestp-div text-sm flex gap-2'>(max <p className='contestp' style={{color:ratingColor(profile.maxRating),fontWeight:'bold'}}>{profile.maxRank}</p><p className='contestp' style={{color:ratingColor(profile.maxRating),fontWeight:'bold'}}>{profile.maxRating}</p> )
     </h2></div>
@@ -446,7 +446,7 @@ const ratingColor = (val) => {
   </div>
 </div>
 
-<div style={{width:'100%'}} ><div className='mr-3 mt-3  flex justify-end'>
+<div style={{width:'100%'}} ><div className='responsivediv mr-3 mt-3  flex justify-end'>
   <div className='border border-solid border-gray-300 rounded p-3'>
   <img className="rounded temp"  src={profile.titlePhoto} alt="Extra large avatar" style={{ width:'272px', height:'300px' }} />
   </div>
