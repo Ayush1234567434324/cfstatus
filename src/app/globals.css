@@ -333,8 +333,8 @@ html, body {
 
      .chart-container
      {
-      height: 100% !important;
-      width: 85% !important;
+      height: 60vh !important;
+      width: 80vw !important;
 
      }
     .tagdad
@@ -369,5 +369,40 @@ html, body {
       justify-content: center !important;
     }
 
+   .contestimg
+   {
+      width:15px;
+      height: 25px;
+   }
+   .contest-div-kami
+   {
+       padding-top: 2px !important;
+   }
+  }
 
+  @media (max-width: 350px)
+  {
+
+    .contest-rating
+    {
+       font-size: 0.6rem !important;
+    }
+    .contestp
+    {
+      font-size: 0.55rem !important;
+    }
+    .contestp-div{
+      font-size: 0.55rem !important;
+    
+     
+    }
+    .contestimg
+   {
+      width:15px;
+      height: 20px;
+   }
+   .responsivespace
+   {
+      gap:0px !important;
+   }
   }
